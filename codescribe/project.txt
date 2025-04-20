@@ -1,0 +1,37 @@
+# Documentation for index.js
+
+## Overview
+The `index.js` file is a Node.js script that sets up a secure filesystem server using the `@modelcontextprotocol/sdk`. It provides various tools for file and directory operations within specified allowed directories.
+
+## Key Components
+
+- **Imports**: The script imports several modules including `Server` and `StdioServerTransport` from `@modelcontextprotocol/sdk`, as well as standard Node.js modules like `fs`, `path`, and `os`.
+
+- **Command Line Arguments**: The script expects at least one command line argument specifying the allowed directory. Additional directories can be specified as needed.
+
+- **Path Normalization**: Functions like `normalizePath` and `expandHome` are used to ensure consistent path handling across different operating systems.
+
+- **Allowed Directories**: The script validates and stores allowed directories, ensuring they exist and are accessible.
+
+- **Security Utilities**: The `validatePath` function checks if a requested path is within the allowed directories, handling symlinks and non-existent paths appropriately.
+
+- **Schema Definitions**: Various schemas are defined using `zod` to validate inputs for different operations like reading, writing, and editing files.
+
+- **Server Setup**: A `Server` instance is created with a set of tools that can be used to interact with the filesystem.
+
+- **Tool Implementations**: Functions are defined to handle file operations such as reading, writing, editing, and searching files. These functions ensure paths are validated and operations are performed securely.
+
+- **Server Execution**: The `runServer` function initializes the server using `StdioServerTransport` and connects it, allowing it to handle requests via standard input/output.
+
+## Usage
+To run the server, use the following command:
+```
+node index.js <allowed-directory> [additional-directories...]
+```
+Replace `<allowed-directory>` with the path to the directory you want to allow access to. You can specify multiple directories if needed.
+
+## Error Handling
+The script includes error handling for invalid paths, inaccessible directories, and other potential issues, providing clear error messages to the user.
+
+## Conclusion
+This `index.js` file is a robust implementation for managing filesystem operations securely within specified directories, leveraging the capabilities of the `@modelcontextprotocol/sdk`.

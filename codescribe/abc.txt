@@ -1,0 +1,55 @@
+# Documentation for index.ts
+
+## Overview
+This file is a Node.js script that sets up a secure filesystem server using the Model Context Protocol (MCP) SDK. It provides various tools for interacting with the filesystem, such as reading, writing, and editing files, as well as managing directories.
+
+## Key Components
+
+### Imports
+- **Server** and **StdioServerTransport** from `@modelcontextprotocol/sdk/server`: Used to set up the server and handle communication via standard input/output.
+- **Schemas** from `@modelcontextprotocol/sdk/types`: Define the structure of requests and tools.
+- **fs** from `fs/promises`: Provides promise-based filesystem operations.
+- **path** and **os**: Utilities for handling file paths and operating system-specific features.
+- **zod** and **zodToJsonSchema**: Used for schema validation and conversion.
+- **diffLines** and **createTwoFilesPatch** from `diff`: Utilities for creating diffs between file versions.
+- **minimatch**: Used for pattern matching in file searches.
+
+### Command Line Argument Parsing
+- Parses command line arguments to determine allowed directories for the server.
+- Validates that each specified directory exists and is accessible.
+
+### Path Normalization and Validation
+- Functions `normalizePath` and `expandHome` are used to standardize file paths.
+- `validatePath` ensures that requested paths are within allowed directories and handles symlinks securely.
+
+### Schema Definitions
+- Various schemas are defined using `zod` to validate inputs for different tools, such as reading files, writing files, and editing files.
+
+### Server Setup
+- A `Server` instance is created with a name and version.
+- The server is configured to handle requests for various tools, each with specific input validation and processing logic.
+
+### Tool Implementations
+- **getFileStats**: Retrieves metadata about a file.
+- **searchFiles**: Recursively searches for files matching a pattern.
+- **applyFileEdits**: Applies line-based edits to a file and generates a diff.
+- **generateDocumentation**: Generates simple documentation for a file's content.
+
+### Tool Handlers
+- The server is set up to handle requests for each tool, validating inputs and performing the requested operations.
+
+### Server Execution
+- The `runServer` function initializes the server transport and starts the server, logging allowed directories.
+
+## Usage
+To run the server, use the command:
+```
+node index.ts <allowed-directory> [additional-directories...]
+```
+This will start the server with the specified directories as the only accessible paths for file operations.
+
+## Error Handling
+- The server includes comprehensive error handling for invalid paths, missing directories, and other potential issues during file operations.
+
+## Conclusion
+This script provides a robust framework for secure file operations within specified directories, leveraging the MCP SDK and various Node.js utilities to ensure safe and efficient file management.
